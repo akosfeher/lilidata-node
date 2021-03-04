@@ -24,7 +24,7 @@ RUN node --version
 
 # RUN npm install core-js@^3
 
-RUN npm install --legacy-peers-dep
+RUN npm install --legacy-peers-deps
 
 RUN npm run build
 
