@@ -1,97 +1,137 @@
 <template>
-  <v-row justify="center" align="center">
-    <v-col cols="12" sm="8" md="6">
-      <div class="text-center">
-        <logo />
-        <vuetify-logo />
-      </div>
-      <v-card>
-        <v-card-title class="headline">
-          Welcome to the Vuetify + Nuxt.js template
-        </v-card-title>
-        <v-card-text>
-          <p>
-            Vuetify is a progressive Material Design component framework for
-            Vue.js. It was designed to empower developers to create amazing
-            applications.
-          </p>
-          <p>
-            For more information on Vuetify, check out the
-            <a
-              href="https://vuetifyjs.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              documentation </a
-            >.
-          </p>
-          <p>
-            If you have questions, please join the official
-            <a
-              href="https://chat.vuetifyjs.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="chat"
-            >
-              discord </a
-            >.
-          </p>
-          <p>
-            Find a bug? Report it on the github
-            <a
-              href="https://github.com/vuetifyjs/vuetify/issues"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="contribute"
-            >
-              issue board </a
-            >.
-          </p>
-          <p>
-            Thank you for developing with Vuetify and I look forward to bringing
-            more exciting features in the future.
-          </p>
-          <div class="text-xs-right">
-            <em><small>&mdash; John Leider</small></em>
-          </div>
-          <hr class="my-3" />
-          <a
-            href="https://nuxtjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Nuxt Documentation
-          </a>
-          <br />
-          <a
-            href="https://github.com/nuxt/nuxt.js"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Nuxt GitHub
-          </a>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn outlined green @click="test">Test sheet</v-btn>
-          <v-btn color="primary" nuxt to="/inspire"> Continue </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-col>
-  </v-row>
+  <v-app id="questionary" style="background-color: #eeeeee">
+    <LanguageSwitcher :languages="languages" :current-language="$i18n.locale" />
+    <v-card
+      max-width="600"
+      class="mx-auto"
+      elevation="0"
+      style="background-color: #eeeeee; padding-left: 0; padding-right: 0"
+    >
+      <v-system-bar color="#aaaaaa" height="10px">
+        <v-spacer></v-spacer>
+      </v-system-bar>
+
+      <v-app-bar color="white">
+        <v-toolbar-title>{{ $t('questionary') }}</v-toolbar-title>
+
+        <v-spacer></v-spacer>
+      </v-app-bar>
+
+      <v-container style="padding-left: 0; padding-right: 0">
+        <v-row dense>
+          <v-col cols="12">
+            <v-card color="white" style="padding-left: 0; padding-right: 0">
+              <v-card-subtitle>{{ $t('question.1') }}</v-card-subtitle>
+              <v-card style="padding-left: 20px; padding-right: 0">
+                <v-radio-group v-model="radioColor">
+                  <v-radio
+                    color="blue"
+                    v-for="n in 3"
+                    :key="n"
+                    :label="color(n)"
+                    :value="n"
+                  ></v-radio>
+                </v-radio-group>
+              </v-card>
+            </v-card>
+          </v-col>
+
+          <v-col>
+            <v-card color="white" style="padding-left: 0; padding-right: 0">
+              <v-card-subtitle>{{ $t('question.2') }}</v-card-subtitle>
+              <v-card style="padding-left: 30px; padding-right: 0">
+                <v-row align-content="center">
+                  <div style="padding-top: 10px">{{ $t('notatall') }}</div>
+                  <v-rating
+                    v-model="rating"
+                    empty-icon="mdi-circle-outline"
+                    full-icon="mdi-radiobox-marked"
+                    color="blue"
+                    icon-label="custom icon label text {0} of {1}"
+                  ></v-rating>
+                  <div style="padding-top: 10px">{{ $t('totaly') }}</div></v-row
+                >
+                <br />
+              </v-card>
+            </v-card>
+          </v-col>
+
+          <v-col v-for="(item, i) in items1" :key="i" cols="12">
+            <v-card :color="item.color" dark>
+              <div class="d-flex flex-no-wrap justify-space-between">
+                <div>
+                  <v-card-title
+                    class="headline"
+                    v-text="item.title"
+                  ></v-card-title>
+
+                  <v-card-subtitle v-text="item.artist"></v-card-subtitle>
+
+                  <v-card-actions>
+                    <v-btn
+                      v-if="item.artist === 'Ellie Goulding'"
+                      class="ml-2 mt-3"
+                      fab
+                      icon
+                      height="40px"
+                      right
+                      width="40px"
+                    >
+                      <v-icon>mdi-play</v-icon>
+                    </v-btn>
+
+                    <v-btn v-else class="ml-2 mt-5" outlined rounded small>
+                      START RADIO
+                    </v-btn>
+                  </v-card-actions>
+                </div>
+
+                <v-avatar class="ma-3" size="125" tile>
+                  <v-img :src="item.src"></v-img>
+                </v-avatar>
+              </div>
+            </v-card>
+          </v-col>
+        </v-row>
+        <v-row style="padding-left: 10px"
+          ><v-btn>{{ $t('next') }}</v-btn></v-row
+        >
+      </v-container>
+    </v-card>
+  </v-app>
 </template>
 
 <script>
 import Logo from '~/components/Logo.vue'
 import VuetifyLogo from '~/components/VuetifyLogo.vue'
+import LanguageSwitcher from '~/components/LanguageSwitcher'
 
 export default {
   components: {
     Logo,
     VuetifyLogo,
+    LanguageSwitcher,
   },
   data: () => ({
     gapi: undefined,
+    radioColor: 0,
+    rating: 0,
+    items1: [],
+    items: [
+      {
+        color: '#1F7087',
+        src: 'https://cdn.vuetifyjs.com/images/cards/foster.jpg',
+        title: 'Supermodel',
+        artist: 'Foster the People',
+      },
+      {
+        color: '#952175',
+        src: 'https://cdn.vuetifyjs.com/images/cards/halcyon.png',
+        title: 'Halcyon Days',
+        artist: 'Ellie Goulding',
+      },
+    ],
+
     languages: [
       {
         id: 'en',
@@ -102,21 +142,6 @@ export default {
         id: 'hu',
         title: 'Magyar',
         flagSrc: 'hungary.png',
-      },
-      {
-        id: 'ro',
-        title: 'Romanian',
-        flagSrc: 'romania.png',
-      },
-      {
-        id: 'po',
-        title: 'Polish',
-        flagSrc: 'poland.png',
-      },
-      {
-        id: 'sl',
-        title: 'Slovenian',
-        flagSrc: 'slovenia.png',
       },
     ],
     SPREADSHEET_ID: '1xpwuj9zpQICdHPWNvNuazGVe7JNOUBgfkHHxQIPT_iA',
@@ -132,11 +157,23 @@ export default {
     API_KEY: 'AIzaSyBrIwQMcRYUf2C3DG3wCoVWEpGigb-Y7JU',
     SCOPE: 'https://www.googleapis.com/auth/spreadsheets',
   }),
+  computed: {
+    colors() {
+      const ret = []
+      ret.push(this.$t('red'))
+      ret.push(this.$t('green'))
+      ret.push(this.$t('blue'))
+      return ret
+    },
+  },
   mounted() {
     console.log('mounted')
     this.init()
   },
   methods: {
+    color(n) {
+      return this.colors[n - 1]
+    },
     async test() {
       console.log('test')
       const valueRangeBody = {
@@ -208,3 +245,8 @@ export default {
   },
 }
 </script>
+<style>
+* {
+  text-transform: none !important;
+}
+</style>

@@ -1,4 +1,11 @@
 {
-  "login.username": "Username",
-  "login.pw": "password"
+  "questionary": "Questionary",
+  "question.1": "What is your favorite color?",
+  "red": "Red",
+  "green": "Green",
+  "blue": "Blue",
+  "question.2": "To what extend do you agree to the recent pandemic restrictions?",
+  "notatall": "Not at all",
+  "totaly": "Totaly",
+  "next": "Next"
 }

@@ -1,6 +1,11 @@
 {
-  "login" : {
-    "username": "Felhasználó név",
-    "pw": "jelszó"
-  }
+  "questionary": "Kérdőív",
+  "question.1": "Mi a kedvenc szined?",
+  "red": "Piros",
+  "green": "Zöld",
+  "blue": "Kék",
+  "question.2": "Mennyire értesz egyet a járvány miatti kokrlátozásokkal?",
+  "notatall": "Egyáltalán nem",
+  "totaly": "Teljesen",
+  "next": "Következő"
 }
