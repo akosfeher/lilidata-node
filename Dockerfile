@@ -24,7 +24,7 @@ RUN node --version
 
 # RUN npm install core-js@^3
 
-RUN npm install
+RUN npm install --force
 
 RUN npm run build
 
